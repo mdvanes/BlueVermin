@@ -1,0 +1,7 @@
+delimiters "$", "$"
+
+main(context) ::= <<
+
+{ "sessionId": "$context.sessionId$" }
+
+>>

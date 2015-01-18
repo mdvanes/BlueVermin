@@ -1,0 +1,23 @@
+{
+  "name": "BlueriqCliUI",
+  "version": "0.0.0",
+  "description": "Blueriq CLI UI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mdvanes/BlueriqCliUI.git"
+  },
+  "author": "M.D. van Es",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mdvanes/BlueriqCliUI/issues"
+  },
+  "homepage": "https://github.com/mdvanes/BlueriqCliUI",
+  "dependencies": {
+    "express": "^4.11.0",
+    "follow-redirects": "0.0.3"
+  }
+}
