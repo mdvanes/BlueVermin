@@ -27,6 +27,10 @@ test on http://runnable.com/?
 
 5.	En voor event (submit/refresh etc…) wordt de handleEvent aangeroepen ook met ajax POST bijv: http://localhost:8080/war/server/session/sessionId/api/subscription/subscriptionId/handleEvent
 
-Deze REST API is ook te vinden op https://my.blueriq.com/display/BQ93/REST+API
+Deze REST API is ook te vinden op https://my.blueriq.com/display/BQ93/REST+API > SessionService 
 
+## Installation
 
+* Install Blueriq 9.3.1 Java
+* put cli.stg in aquima.home/UI/mvc
+* configure aquima.properties to have a theme cli that points to cli.stg.
