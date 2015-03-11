@@ -4,6 +4,7 @@
     var config = require('../config');
     var http = require('follow-redirects').http;
     var State = require('./State');
+    //var request = require('request');
 
     // Blueriq Session initializer
     var Bsession = function() {//state, rl) {
@@ -26,7 +27,7 @@
             method: 'POST'
         };
 
-        console.log('getModel options: ', options);
+        //console.log('getModel options: ', options);
 
         var callback = function(response) {
             var data = '';
@@ -41,7 +42,7 @@
                     var parsed = JSON.parse(stub);
                     //console.log('parsed: ', parsed);
                     self.state = new State(parsed);
-                    console.log('state', self.state, ' self ', self);
+                    //console.log('state', self.state, ' self ', self);
                     console.log('stub loaded');
                     //this.state = state;
                     //this.rl.prompt();

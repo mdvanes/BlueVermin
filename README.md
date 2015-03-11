@@ -45,3 +45,13 @@ http://lap-2077:8041/server/start?project=export-Kinderbijslag&flow=Start&versio
 5.	En voor event (submit/refresh etc…) wordt de handleEvent aangeroepen ook met ajax POST bijv: http://localhost:8080/war/server/session/sessionId/api/subscription/subscriptionId/handleEvent
 
 Deze REST API is ook te vinden op https://my.blueriq.com/display/BQ93/REST+API > SessionService 
+
+## TODO
+
+* remove stub of model
+* refactor to be MVC
+
+## Changelog
+
+* error when the server hasn't started yet
+* run start when the application starts
