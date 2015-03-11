@@ -18,6 +18,7 @@
   "homepage": "https://github.com/mdvanes/BlueriqCliUI",
   "dependencies": {
     "express": "^4.11.0",
-    "follow-redirects": "0.0.3"
+    "follow-redirects": "0.0.3",
+    "request": "^2.53.0"
   }
 }
