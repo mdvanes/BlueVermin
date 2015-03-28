@@ -9,8 +9,7 @@
         commands = require('./js/commands'),
         config = require('./js/config'),
         request = require('request'),
-        chalk = require('chalk'),
-        Browser = require('zombie');
+        chalk = require('chalk');
 
     // TODO implement up-arrow to get the last command
     // TODO relinquish prompt to user if start() completed succesfully
@@ -48,7 +47,7 @@
         }
     };
 
-    var initOld = function() {
+    var init = function() {
 
         // TODO should be done with a promise or generator (e.g. Q or https://www.npmjs.com/package/request-promise)
         // TODO should be in the constructor of Bsession
@@ -65,6 +64,7 @@
                 //bsession.start();
                 //console.log('state3 ', bsession.state);
 
+                // TODO instead of polling, let createHttpSession return a promise or generator?
                 var testDefined = function() {
                     if(typeof bsession.state === 'undefined') {
                         //console.log('state is undefined');
@@ -82,100 +82,64 @@
     };
 
     // Zombie test
-    var initZombie = function() {
-        var browser = new Browser();
-        browser.visit('http://lap-2077:8041/server/start?project=export-Kinderbijslag&flow=Start&version=0.0-Trunk&languageCode=nl-NL&ui=mvc&theme=cli&noTools=true')
-            .then(function() {
-                console.log('init body content: ', browser.text('body'));
-                var initJson = JSON.parse(browser.text('body'));
-                console.log(initJson.sessionId);
-                browser.visit('http://lap-2077:8041/server/session/'+initJson.sessionId+'/api/subscribe/')
-                    .then(function() {
-                        // TODO and here it fails because a POST is expected. Zombie can't force a POST. I would have to build an HTML form and submit it.
-                        console.log('subscribe body content: ', browser.text('body'));
-                    });
-                // http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/api/subscribe/
-                // http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/api/subscribe/09b389e5-d76a-46a8-8bfd-7cb22f283722
-            });
-    };
+    //var initZombie = function() {
+    //    var browser = new Browser();
+    //    browser.visit('http://lap-2077:8041/server/start?project=export-Kinderbijslag&flow=Start&version=0.0-Trunk&languageCode=nl-NL&ui=mvc&theme=cli&noTools=true')
+    //        .then(function() {
+    //            console.log('init body content: ', browser.text('body'));
+    //            var initJson = JSON.parse(browser.text('body'));
+    //            console.log(initJson.sessionId);
+    //            browser.visit('http://lap-2077:8041/server/session/'+initJson.sessionId+'/api/subscribe/')
+    //                .then(function() {
+    //                    // TODO and here it fails because a POST is expected. Zombie can't force a POST. I would have to build an HTML form and submit it.
+    //                    console.log('subscribe body content: ', browser.text('body'));
+    //                });
+    //            // http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/api/subscribe/
+    //            // http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/api/subscribe/09b389e5-d76a-46a8-8bfd-7cb22f283722
+    //        });
+    //};
 
-    var init = function() {
+    var initNew = function() {
+        // TODO remove follow-redirects and zombie from package.json and node_modules
+        // TODO convert to promises or generators
+        var blueriqInitHeaders = {
+            //'accept': 'application/json; charset=UTF-8',
+            //'accept-encoding': 'gzip, deflate',
+            //'accept-language': 'en-US,en;q=0.5',
+            //'cache-control': 'no-cache',
+            //'connection': 'keep-alive',
+            //'content-length': '0',
+            //'content-type': 'application/json',
+            //'host': 'lap-2077:8041',
+            //'pragma': 'no-cache',
+            //'referer': 'http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/mvc/index.html'
+        };
         request.get(
             {
                 url: 'http://lap-2077:8041/server/start?project=export-Kinderbijslag&flow=Start&version=0.0-Trunk&languageCode=nl-NL&ui=mvc&theme=cli&noTools=true',
                 jar: true,
-                headers: {
-                    'accept': 'application/json; charset=UTF-8',
-                    'accept-encoding': 'gzip, deflate',
-                    'accept-language': 'en-US,en;q=0.5',
-                    'cache-control': 'no-cache',
-                    'connection': 'keep-alive',
-                    'content-length': '0',
-                    'content-type': 'application/json',
-                    'host': 'lap-2077:8041',
-                    'pragma': 'no-cache',
-                    'referer': 'http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/mvc/index.html'
-                }
+                headers: blueriqInitHeaders
             }, function(err,httpResponse,body) {
-            console.log('init body', body);
+            //console.log('init body', body);
             var initJson = JSON.parse(body);
             console.log('sessionId_' + initJson.sessionId, initJson);
-            //request.post('http://lap-2077:8041/server/session/'+initJson.sessionId+'/api/subscribe/', null, function(err, httpResponse, body){
-            /*
-             Accept	application/json; charset=UTF-8
-             Accept-Encoding	gzip, deflate
-             Accept-Language	en-US,en;q=0.5
-             Cache-Control	no-cache
-             Connection	keep-alive
-             Content-Length	0
-             Content-Type	application/json
-             Cookie	AquimaWidgetSettings=e949dc64-9513-4964-a8ba-bc93d4736a3c; JSESSIONID=1aegn7vfdvjmv1chuwn4xu8n0w
-             Host	lap-2077:8041
-             Pragma	no-cache
-             Referer	http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/mvc/index.html
-             User-Agent	Mozilla/5.0 (Windows NT 6.3; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0
-             x-requested-with	XMLHttpRequest
-             */
             request.post(
                 {
                     url: 'http://lap-2077:8041/server/session/'+initJson.sessionId+'/api/subscribe/',
                     jar: true,
-                    headers: {
-                        'accept': 'application/json; charset=UTF-8',
-                        'accept-encoding': 'gzip, deflate',
-                        'accept-language': 'en-US,en;q=0.5',
-                        'cache-control': 'no-cache',
-                        'connection': 'keep-alive',
-                        'content-length': '0',
-                        'content-type': 'application/json',
-                        'host': 'lap-2077:8041',
-                        'pragma': 'no-cache',
-                        'referer': 'http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/mvc/index.html'
-                    }
+                    headers: blueriqInitHeaders
                 }, function(err, httpResponse1, body1){
-                    console.log('subscribe: ', body1);//, httpResponse);
-                    console.log('subscribe httpResponse:', httpResponse1.headers);
+                    //console.log('subscribe: ', body1);//, httpResponse);
+                    //console.log('subscribe httpResponse:', httpResponse1.headers);
 
-                    //request.post('http://lap-2077:8041/server/session/'+initJson.sessionId+'/api/subscribe/'+initJson.sessionId, null, function(err, httpResponse, body) {
                     request.post(
                         {
                             url: 'http://lap-2077:8041/server/session/'+initJson.sessionId+'/api/subscribe/'+initJson.sessionId,
                             jar: true,
-                            headers: {
-                                'accept': 'application/json; charset=UTF-8',
-                                'accept-encoding': 'gzip, deflate',
-                                'accept-language': 'en-US,en;q=0.5',
-                                'cache-control': 'no-cache',
-                                'connection': 'keep-alive',
-                                'content-length': '0',
-                                'content-type': 'application/json',
-                                'host': 'lap-2077:8041',
-                                'pragma': 'no-cache',
-                                'referer': 'http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/mvc/index.html'
-                            }
+                            headers: blueriqInitHeaders
                         }, function(err, httpResponse2, body2) {
-                            console.log('get page:', body2);//, httpResponse);
-                            console.log('get page headers:', httpResponse2.headers);
+                            console.log('get page:', body2);
+                            //console.log('get page headers:', httpResponse2.headers);
                     });
             });
         });
