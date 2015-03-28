@@ -49,7 +49,14 @@ Deze REST API is ook te vinden op https://my.blueriq.com/display/BQ93/REST+API >
 ## TODO
 
 * remove stub of model
-* refactor to be MVC
+    * http://stackoverflow.com/questions/19936705/how-to-maintain-a-request-session-in-nodejs
+    * https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions/
+    * https://github.com/assaf/zombie/blob/master/README.md (I had to run this before installing zombie: set PYTHON=D:\Everest\Util\Python27\python.exe)
+* refactor to be MVC? what is a backend MVC framework? Express? Sailsjs, KoaJs, HapiJs.
+  Flatiron JS actually has a generator for CLI. Example app: https://github.com/vesln/todo
+  But flatiron assumes you will run from the OS CLI and call it like: todo add bla, so no interactive console.
+* add grunt/jshint/lintspaces
+* serverside typescript?
 
 ## Changelog
 
