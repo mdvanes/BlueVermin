@@ -51,7 +51,7 @@
 
         // TODO should be done with a promise or generator (e.g. Q or https://www.npmjs.com/package/request-promise)
         // TODO should be in the constructor of Bsession
-        request('http://' + config.host + ':' + config.port, function(error, response, body) {
+        request('http://' + config.host + ':' + config.port, function(error, response) {//, body) {
             //console.log(error, response.statusCode);
             if (error || (response && response.statusCode === 404)) {
                 // Logs errors, but doesn't kills the server: console.error('\n\nServer not found or not started');
@@ -99,51 +99,51 @@
     //        });
     //};
 
-    var initNew = function() {
-        // TODO remove follow-redirects and zombie from package.json and node_modules
-        // TODO convert to promises or generators
-        var blueriqInitHeaders = {
-            //'accept': 'application/json; charset=UTF-8',
-            //'accept-encoding': 'gzip, deflate',
-            //'accept-language': 'en-US,en;q=0.5',
-            //'cache-control': 'no-cache',
-            //'connection': 'keep-alive',
-            //'content-length': '0',
-            //'content-type': 'application/json',
-            //'host': 'lap-2077:8041',
-            //'pragma': 'no-cache',
-            //'referer': 'http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/mvc/index.html'
-        };
-        request.get(
-            {
-                url: 'http://lap-2077:8041/server/start?project=export-Kinderbijslag&flow=Start&version=0.0-Trunk&languageCode=nl-NL&ui=mvc&theme=cli&noTools=true',
-                jar: true,
-                headers: blueriqInitHeaders
-            }, function(err,httpResponse,body) {
-            //console.log('init body', body);
-            var initJson = JSON.parse(body);
-            console.log('sessionId_' + initJson.sessionId, initJson);
-            request.post(
-                {
-                    url: 'http://lap-2077:8041/server/session/'+initJson.sessionId+'/api/subscribe/',
-                    jar: true,
-                    headers: blueriqInitHeaders
-                }, function(err, httpResponse1, body1){
-                    //console.log('subscribe: ', body1);//, httpResponse);
-                    //console.log('subscribe httpResponse:', httpResponse1.headers);
-
-                    request.post(
-                        {
-                            url: 'http://lap-2077:8041/server/session/'+initJson.sessionId+'/api/subscribe/'+initJson.sessionId,
-                            jar: true,
-                            headers: blueriqInitHeaders
-                        }, function(err, httpResponse2, body2) {
-                            console.log('get page:', body2);
-                            //console.log('get page headers:', httpResponse2.headers);
-                    });
-            });
-        });
-    };
+    //var initNew = function() {
+    //    // TODO remove follow-redirects and zombie from package.json and node_modules
+    //    // TODO convert to promises or generators
+    //    var blueriqInitHeaders = {
+    //        //'accept': 'application/json; charset=UTF-8',
+    //        //'accept-encoding': 'gzip, deflate',
+    //        //'accept-language': 'en-US,en;q=0.5',
+    //        //'cache-control': 'no-cache',
+    //        //'connection': 'keep-alive',
+    //        //'content-length': '0',
+    //        //'content-type': 'application/json',
+    //        //'host': 'lap-2077:8041',
+    //        //'pragma': 'no-cache',
+    //        //'referer': 'http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/mvc/index.html'
+    //    };
+    //    request.get(
+    //        {
+    //            url: 'http://lap-2077:8041/server/start?project=export-Kinderbijslag&flow=Start&version=0.0-Trunk&languageCode=nl-NL&ui=mvc&theme=cli&noTools=true',
+    //            jar: true,
+    //            headers: blueriqInitHeaders
+    //        }, function(err,httpResponse,body) {
+    //        //console.log('init body', body);
+    //        var initJson = JSON.parse(body);
+    //        console.log('sessionId_' + initJson.sessionId, initJson);
+    //        request.post(
+    //            {
+    //                url: 'http://lap-2077:8041/server/session/'+initJson.sessionId+'/api/subscribe/',
+    //                jar: true,
+    //                headers: blueriqInitHeaders
+    //            }, function(err, httpResponse1, body1){
+    //                //console.log('subscribe: ', body1);//, httpResponse);
+    //                //console.log('subscribe httpResponse:', httpResponse1.headers);
+    //
+    //                request.post(
+    //                    {
+    //                        url: 'http://lap-2077:8041/server/session/'+initJson.sessionId+'/api/subscribe/'+initJson.sessionId,
+    //                        jar: true,
+    //                        headers: blueriqInitHeaders
+    //                    }, function(err, httpResponse2, body2) {
+    //                        console.log('get page:', body2);
+    //                        //console.log('get page headers:', httpResponse2.headers);
+    //                    });
+    //            });
+    //    });
+    //};
 
     rl.on('line', function(line) {
         if(line.trim().indexOf('answer') === 0) {
@@ -174,6 +174,10 @@
                 case 'help':
                     commands.help();
                     break;
+                case 'exit':
+                    console.log(chalk.black.bold.bgBlue('Have a great day!'));
+                    process.exit(0);
+                    break;
                 default:
                     console.log('Unknown command: `' + line.trim() + '`');
                     break;
@@ -182,14 +186,14 @@
         }
     }).on('close', function() {
         // TODO how to trigger close? - pressing ctrl+c, but only in Terminal, not when running index.js from WebStorm context menu
-        console.log(chalk.bgBlue('Have a great day!'));
+        console.log(chalk.black.bold.bgRed('\nYou can also shut down with the \'exit\' command'));
         process.exit(0);
     });
 
 
     init();
     // TODO fix so cursor is at end of line
-    rl.setPrompt('blueriq:~$ ');
+    rl.setPrompt(chalk.green('blueriq:~$ '));
     // TODO Show prompt should be in the callback of init() (or promise). Now it's also defined in Bsession.js and/or checked with a timeout
     //rl.prompt();
 })();

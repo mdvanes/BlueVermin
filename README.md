@@ -54,6 +54,7 @@ Deze REST API is ook te vinden op https://my.blueriq.com/display/BQ93/REST+API >
   But flatiron assumes you will run from the OS CLI and call it like: todo add bla, so no interactive console.
 * serverside typescript?
 * compile to executable with e.g. EncloseJS http://enclosejs.com/
+* consider renaming to BlueVermin
 
 ## Changelog
 
