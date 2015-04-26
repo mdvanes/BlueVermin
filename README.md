@@ -48,17 +48,15 @@ Deze REST API is ook te vinden op https://my.blueriq.com/display/BQ93/REST+API >
 
 ## TODO
 
-* remove stub of model
-    * http://stackoverflow.com/questions/19936705/how-to-maintain-a-request-session-in-nodejs
-    * https://stormpath.com/blog/everything-you-ever-wanted-to-know-about-node-dot-js-sessions/
-    * https://github.com/assaf/zombie/blob/master/README.md (I had to run this before installing zombie: set PYTHON=D:\Everest\Util\Python27\python.exe)
+* add grunt/jshint/lintspaces
 * refactor to be MVC? what is a backend MVC framework? Express? Sailsjs, KoaJs, HapiJs.
   Flatiron JS actually has a generator for CLI. Example app: https://github.com/vesln/todo
   But flatiron assumes you will run from the OS CLI and call it like: todo add bla, so no interactive console.
-* add grunt/jshint/lintspaces
 * serverside typescript?
+* compile to executable with e.g. EncloseJS http://enclosejs.com/
 
 ## Changelog
 
-* error when the server hasn't started yet
-* run start when the application starts
+* Removed model stub: load model from Blueriq Server (maintain the session)
+* Display error when the server hasn't started yet
+* Run start when the application starts
