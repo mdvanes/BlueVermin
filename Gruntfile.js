@@ -27,10 +27,36 @@ module.exports = function (grunt) {
                         cwd: 'D:\\Everest\\Servers\\Blueriq-Server-9.4.1.0\\'
                     }
                 },
-                //command: 'test.bat'
                 command: 'start.bat'
             }
+        },
+
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc'
+            },
+            all: ['Gruntfile.js', 'index.js', 'js/**/*.js']
+        },
+
+        jscs: {
+            options: {
+                config: '.jscs'
+            },
+            dev: {
+                files: {
+                    src: ['Gruntfile.js', 'index.js', 'js/**/*.js']
+                }
+            }
+        },
+
+        watch: {
+            script: {
+                files: ['index.js', 'js/**/*.js'],
+                tasks: ['jscs', 'jshint']
+            }
         }
+
+
         //jshint: {
         //    all: [
         //        'Gruntfile.js',
@@ -68,8 +94,8 @@ module.exports = function (grunt) {
     //grunt.registerTask('test', ['clean', 'kot2js', 'nodeunit']);
 
     // By default, lint and run all tests.
-    //grunt.registerTask('default', ['jshint', 'test']);
+    grunt.registerTask('default', ['jscs', 'jshint', 'watch']);
 
-    grunt.registerTask('blueriq', 'shell:startblueriq');
+    grunt.registerTask('blueriq', ['shell:startblueriq', 'default']);
 
 };

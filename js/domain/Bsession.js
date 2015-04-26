@@ -1,9 +1,9 @@
 (function() {
     'use strict';
 
-    var config = require('../config'),
+    //var config = require('../config'),
     //var http = require('follow-redirects').http;
-        State = require('./State'),
+    var State = require('./State'),
         request = require('request');
 
     // Blueriq Session initializer / Blueriq SessionController?
@@ -49,7 +49,7 @@
                         url: 'http://lap-2077:8041/server/session/'+initJson.sessionId+'/api/subscribe/',
                         jar: true,
                         headers: blueriqInitHeaders
-                    }, function(err, httpResponse1, body1){
+                    }, function(){//err, httpResponse1, body1){
                         //console.log('subscribe: ', body1);//, httpResponse);
                         //console.log('subscribe httpResponse:', httpResponse1.headers);
 
