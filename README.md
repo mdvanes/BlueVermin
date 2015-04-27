@@ -56,6 +56,11 @@ Deze REST API is ook te vinden op https://my.blueriq.com/display/BQ93/REST+API >
 * compile to executable with e.g. EncloseJS http://enclosejs.com/
 * consider renaming to BlueVermin
 
+the origin of the logo is: http://www.chris.com/ascii/index.php?art=animals/rodents/mice
+()-().----.          .
+ \"/` ___  ;________.'  jgs
+  ` ^^   ^^
+
 ## Changelog
 
 * Removed model stub: load model from Blueriq Server (maintain the session)
