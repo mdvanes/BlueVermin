@@ -13,16 +13,9 @@
 
     // In blueriq core.js it does: init? -> blueriq.Application.createSubscription -> blueriq.SessionService#subscribe (or something)
     // and after that for each page: http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/api/subscription/09b389e5-d76a-46a8-8bfd-7cb22f283722/handleEvent
-    Bsession.prototype.getTestServerUrl = function(){};
-
-    //var config = {
-    //    host: 'lap-2077',
-    //    port: '8041',
-    //    project: 'export-Kinderbijslag',
-    //    flow: 'Start',
-    //    version: '0.0-Trunk' //'0.0-Wetwijziging',
-    //};
-
+    Bsession.prototype.getTestServerUrl = function(){
+        return 'http://' + config.host + ':' + config.port;
+    };
     Bsession.prototype.getInitUrl = function() {
         return 'http://' + config.host + ':' + config.port +
             '/server/start?project=' + config.project +
@@ -41,7 +34,6 @@
     Bsession.prototype.createHttpSession = function() {
         var self = this;
         self.sessionId = null;
-        // TODO use variables for URL
         //var blueriqInitHeaders = {
         //'accept': 'application/json; charset=UTF-8',
         //'accept-encoding': 'gzip, deflate',
@@ -55,14 +47,28 @@
         //'referer': 'http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/mvc/index.html'
         //};
 
-        return request.get({
-            url: self.getInitUrl(),
-            jar: true
-            //headers: blueriqInitHeaders
+        return request({
+            url: self.getTestServerUrl(),
+            resolveWithFullResponse: true
+        }).then(function(response) {
+            if(response && response.statusCode === 404) {
+                throw new Error('Server not found or not started');
+            } else {
+                // TODO request.get here
+                return request.get({
+                    url: self.getInitUrl(),
+                    jar: true
+                    //headers: blueriqInitHeaders
+                });
+            }
+        }).catch(function(e) {
+            throw new Error('Server not found or not started. ' + e);
         }).then(function(response) {
             if(response) {
                 var initJson = JSON.parse(response);
-                //console.log('sessionId_' + initJson.sessionId, initJson);
+                if(self.isDebug) {
+                    console.log('DEBUG sessionId_' + initJson.sessionId, initJson);
+                }
                 self.sessionId = initJson.sessionId;
             } else {
                 throw new Error('CreateHttpSession: no body returned');
@@ -80,7 +86,7 @@
             });
         }).then(function(response){
             if(self.isDebug) {
-                console.log('get page foo:', response);
+                console.log('DEBUG get page content:', response);
             }
             try {
                 // TODO stub and toggle with global isStubbed param?
