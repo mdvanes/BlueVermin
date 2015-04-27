@@ -191,6 +191,11 @@
     });
 
 
+    // TODO move to init
+    console.log(chalk.blue.bold('()-().----.          .'));
+    console.log(chalk.blue.bold(' \\"/` ___  ;________.\'  BlueVermin'));
+    console.log(chalk.blue.bold('  ` ^^   ^^'));
+
     init();
     // TODO fix so cursor is at end of line
     rl.setPrompt(chalk.green('blueriq:~$ '));
