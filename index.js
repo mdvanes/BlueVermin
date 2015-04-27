@@ -8,8 +8,8 @@
     var Bsession = require('./js/domain/Bsession'),
         State = require('./js/domain/State'),
         commands = require('./js/commands'),
-        config = require('./js/config'),
-        request = require('request'),
+        //config = require('./js/config'),
+        //request = require('request'),
         chalk = require('chalk');
 
     // TODO implement up-arrow to get the last command
@@ -49,49 +49,38 @@
     };
 
     var init = function() {
-
-        // TODO should be done with a promise or generator (e.g. Q or https://www.npmjs.com/package/request-promise)
-        // TODO should be in the constructor of Bsession
-        request('http://' + config.host + ':' + config.port, function(error, response) {//, body) {
-            //console.log(error, response.statusCode);
-            if (error || (response && response.statusCode === 404)) {
-                // Logs errors, but doesn't kills the server: console.error('\n\nServer not found or not started');
-                console.log(chalk.bold.red('Server not found or not started'));
-                //throw new Error('Server not found or not started');
-                process.exit(0);
-            } else {
-                bsession = new Bsession();
-                var pageObjPromise = bsession.createHttpSession();
-                pageObjPromise.then(function(response) {
-                    console.log('deferred promise chain' + response, response);
-                    state = new State(response);//pageObj);
-
-                    console.log('pageObj/state is defined'); //, bsession.state);
-                    //state = bsession.state;
-                    rl.prompt();
-                }).catch(function(error){
-                    console.error(chalk.bold.red(error));
-                    process.exit(0);
-                });
-
-                //bsession.start();
-                //console.log('state3 ', bsession.state);
-
-                // TODO instead of polling, let createHttpSession return a promise or generator?
-                //var testDefined = function() {
-                //    if(typeof bsession.state === 'undefined') {
-                //        //console.log('state is undefined');
-                //        // retry
-                //        setTimeout(testDefined, 1000);
-                //    } else {
-                //        console.log('state is defined'); //, bsession.state);
-                //        state = bsession.state;
-                //        rl.prompt();
-                //    }
-                //};
-                //testDefined();
-            }
+        bsession = new Bsession();
+        var pageObjPromise = bsession.createHttpSession();
+        pageObjPromise.then(function(response) {
+            //console.log('deferred promise chain' + response, response);
+            state = new State(response);
+            //console.log('pageObj/state is defined');
+            rl.prompt();
+        }).catch(function(error){
+            console.error(chalk.bold.red(error));
+            process.exit(0);
         });
+        //request('http://' + config.host + ':' + config.port, function(error, response) {//, body) {
+        //    //console.log(error, response.statusCode);
+        //    if (error || (response && response.statusCode === 404)) {
+        //        // Logs errors, but doesn't kills the server: console.error('\n\nServer not found or not started');
+        //        console.log(chalk.bold.red('Server not found or not started'));
+        //        //throw new Error('Server not found or not started');
+        //        process.exit(0);
+        //    } else {
+        //        bsession = new Bsession();
+        //        var pageObjPromise = bsession.createHttpSession();
+        //        pageObjPromise.then(function(response) {
+        //            //console.log('deferred promise chain' + response, response);
+        //            state = new State(response);
+        //            console.log('pageObj/state is defined');
+        //            rl.prompt();
+        //        }).catch(function(error){
+        //            console.error(chalk.bold.red(error));
+        //            process.exit(0);
+        //        });
+        //    }
+        //});
     };
 
     // Zombie test
@@ -188,7 +177,7 @@
                     commands.help();
                     break;
                 case 'exit':
-                    console.log(chalk.black.bold.bgBlue('Have a great day!'));
+                    console.log(chalk.black.bold.bgBlue('Have a great day!')); // TODO change this text
                     process.exit(0);
                     break;
                 default:
