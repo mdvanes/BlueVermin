@@ -75,8 +75,10 @@
     State.prototype.answer = function(answerIndex, rl) {
         if(this.isReady()) {
             //console.log(state.getQuestions()[answerIndex].questionText);
-            rl.question(this.getQuestions()[answerIndex].questionText + '? ', function(answer) {
+            var question = this.getQuestions()[answerIndex];
+            rl.question(question.questionText + '? ', function(answer) {
                 console.log('> You answered ' + answer);
+                question.values[0] = answer;
                 rl.prompt();
             });
         } else {
