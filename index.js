@@ -6,6 +6,7 @@
     'use strict';
 
     var Bsession = require('./js/domain/Bsession'),
+        State = require('./js/domain/State'),
         commands = require('./js/commands'),
         config = require('./js/config'),
         request = require('request'),
@@ -60,23 +61,35 @@
                 process.exit(0);
             } else {
                 bsession = new Bsession();
-                bsession.createHttpSession();
+                var pageObjPromise = bsession.createHttpSession();
+                pageObjPromise.then(function(response) {
+                    console.log('deferred promise chain' + response, response);
+                    state = new State(response);//pageObj);
+
+                    console.log('pageObj/state is defined'); //, bsession.state);
+                    //state = bsession.state;
+                    rl.prompt();
+                }).catch(function(error){
+                    console.error(chalk.bold.red('ERROR ' + error, error));
+                    process.exit(0);
+                });
+
                 //bsession.start();
                 //console.log('state3 ', bsession.state);
 
                 // TODO instead of polling, let createHttpSession return a promise or generator?
-                var testDefined = function() {
-                    if(typeof bsession.state === 'undefined') {
-                        //console.log('state is undefined');
-                        // retry
-                        setTimeout(testDefined, 1000);
-                    } else {
-                        console.log('state is defined'); //, bsession.state);
-                        state = bsession.state;
-                        rl.prompt();
-                    }
-                };
-                testDefined();
+                //var testDefined = function() {
+                //    if(typeof bsession.state === 'undefined') {
+                //        //console.log('state is undefined');
+                //        // retry
+                //        setTimeout(testDefined, 1000);
+                //    } else {
+                //        console.log('state is defined'); //, bsession.state);
+                //        state = bsession.state;
+                //        rl.prompt();
+                //    }
+                //};
+                //testDefined();
             }
         });
     };
