@@ -20,22 +20,17 @@
             }
         } else {
             switch(line) {
-                case 'hello':
-                    console.log('world!');
-                    break;
                 case 'look':
                     state.look();
                     break;
                 case 'next': // next page
-                    break;
-                case 'review':
-                    state.review();
+                    // TODO implement
                     break;
                 case 'help':
                     help();
                     break;
                 case 'exit':
-                    console.log(chalk.black.bold.bgBlue('Have a great day!')); // TODO change this text
+                    console.log(chalk.blue.bold('See you soon at BlueVermin!'));
                     process.exit(0);
                     break;
                 default:
