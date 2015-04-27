@@ -2,6 +2,7 @@
     'use strict';
 
     var request = require('request-promise');
+    var config = require('../config');
 
     // TODO rename BSessionController? Blueriq Session initializer / Blueriq SessionController?
     var Bsession = function(isDebug) {
@@ -14,14 +15,27 @@
     // and after that for each page: http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/api/subscription/09b389e5-d76a-46a8-8bfd-7cb22f283722/handleEvent
     Bsession.prototype.getTestServerUrl = function(){};
 
+    //var config = {
+    //    host: 'lap-2077',
+    //    port: '8041',
+    //    project: 'export-Kinderbijslag',
+    //    flow: 'Start',
+    //    version: '0.0-Trunk' //'0.0-Wetwijziging',
+    //};
+
     Bsession.prototype.getInitUrl = function() {
-        return 'http://lap-2077:8041/server/start?project=export-Kinderbijslag&flow=Start&version=0.0-Trunk&languageCode=nl-NL&ui=mvc&theme=cli&noTools=true';
+        return 'http://' + config.host + ':' + config.port +
+            '/server/start?project=' + config.project +
+            '&flow=' + config.flow +
+            '&version=' + config.version + '&languageCode=nl-NL&ui=mvc&' +
+            'theme=' + config.theme + '&noTools=true';
     };
     Bsession.prototype.getCreateSubscriptionUrl = function() {
-        return 'http://lap-2077:8041/server/session/' + this.sessionId + '/api/subscribe/';
+        return 'http://' + config.host + ':' + config.port +
+            '/server/session/' + this.sessionId + '/api/subscribe/';
     };
     Bsession.prototype.getSubscribeUrl = function(){
-        return 'http://lap-2077:8041/server/session/' + this.sessionId + '/api/subscribe/' + this.sessionId;
+        return this.getCreateSubscriptionUrl() + this.sessionId;
     };
 
     Bsession.prototype.createHttpSession = function() {
@@ -41,9 +55,8 @@
         //'referer': 'http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/mvc/index.html'
         //};
 
-        //console.log('request-promise start');
-        var promiseChain = request.get({
-            url: self.getInitUrl(),//'http://lap-2077:8041/server/start?project=export-Kinderbijslag&flow=Start&version=0.0-Trunk&languageCode=nl-NL&ui=mvc&theme=cli&noTools=true',
+        return request.get({
+            url: self.getInitUrl(),
             jar: true
             //headers: blueriqInitHeaders
         }).then(function(response) {
@@ -55,13 +68,13 @@
                 throw new Error('CreateHttpSession: no body returned');
             }
             return request.post({
-                url: self.getCreateSubscriptionUrl(), //'http://lap-2077:8041/server/session/' + self.sessionId + '/api/subscribe/', // TODO to construct function
+                url: self.getCreateSubscriptionUrl(),
                 jar: true
                 //headers: blueriqInitHeaders
             });
-        }).then(function(){//response){
+        }).then(function(){
             return request.post({
-                url: self.getSubscribeUrl(), //'http://lap-2077:8041/server/session/' + self.sessionId + '/api/subscribe/' + self.sessionId, // TODO to construct function
+                url: self.getSubscribeUrl(),
                 jar: true
                 //headers: blueriqInitHeaders
             });
@@ -79,8 +92,6 @@
                 throw new Error('CreateHttpSession: could not parse page response: ' + e, e);
             }
         });
-        //.catch(console.error);
-        return promiseChain;
     };
 
     module.exports = Bsession;
