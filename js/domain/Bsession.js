@@ -12,6 +12,17 @@
 
     // In blueriq core.js it does: init? -> blueriq.Application.createSubscription -> blueriq.SessionService#subscribe (or something)
     // and after that for each page: http://lap-2077:8041/server/session/09b389e5-d76a-46a8-8bfd-7cb22f283722/api/subscription/09b389e5-d76a-46a8-8bfd-7cb22f283722/handleEvent
+    Bsession.prototype.getTestServerUrl = function(){};
+
+    Bsession.prototype.getInitUrl = function() {
+        return 'http://lap-2077:8041/server/start?project=export-Kinderbijslag&flow=Start&version=0.0-Trunk&languageCode=nl-NL&ui=mvc&theme=cli&noTools=true';
+    };
+    Bsession.prototype.getCreateSubscriptionUrl = function() {
+        return 'http://lap-2077:8041/server/session/' + this.sessionId + '/api/subscribe/';
+    };
+    Bsession.prototype.getSubscribeUrl = function(){
+        return 'http://lap-2077:8041/server/session/' + this.sessionId + '/api/subscribe/' + this.sessionId;
+    };
 
     Bsession.prototype.createHttpSession = function() {
         var self = this;
@@ -32,25 +43,25 @@
 
         //console.log('request-promise start');
         var promiseChain = request.get({
-            url: 'http://lap-2077:8041/server/start?project=export-Kinderbijslag&flow=Start&version=0.0-Trunk&languageCode=nl-NL&ui=mvc&theme=cli&noTools=true',
+            url: self.getInitUrl(),//'http://lap-2077:8041/server/start?project=export-Kinderbijslag&flow=Start&version=0.0-Trunk&languageCode=nl-NL&ui=mvc&theme=cli&noTools=true',
             jar: true
             //headers: blueriqInitHeaders
         }).then(function(response) {
             if(response) {
                 var initJson = JSON.parse(response);
-                console.log('sessionId_' + initJson.sessionId, initJson);
+                //console.log('sessionId_' + initJson.sessionId, initJson);
                 self.sessionId = initJson.sessionId;
             } else {
                 throw new Error('CreateHttpSession: no body returned');
             }
             return request.post({
-                url: 'http://lap-2077:8041/server/session/' + self.sessionId + '/api/subscribe/', // TODO to construct function
+                url: self.getCreateSubscriptionUrl(), //'http://lap-2077:8041/server/session/' + self.sessionId + '/api/subscribe/', // TODO to construct function
                 jar: true
                 //headers: blueriqInitHeaders
             });
         }).then(function(){//response){
             return request.post({
-                url: 'http://lap-2077:8041/server/session/' + self.sessionId + '/api/subscribe/' + self.sessionId, // TODO to construct function
+                url: self.getSubscribeUrl(), //'http://lap-2077:8041/server/session/' + self.sessionId + '/api/subscribe/' + self.sessionId, // TODO to construct function
                 jar: true
                 //headers: blueriqInitHeaders
             });

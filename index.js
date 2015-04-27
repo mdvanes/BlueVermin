@@ -70,7 +70,7 @@
                     //state = bsession.state;
                     rl.prompt();
                 }).catch(function(error){
-                    console.error(chalk.bold.red('ERROR ' + error, error));
+                    console.error(chalk.bold.red(error));
                     process.exit(0);
                 });
 
