@@ -20,7 +20,8 @@
     "chalk": "^1.0.0",
     "express": "^4.11.0",
     "follow-redirects": "0.0.3",
-    "request": "^2.53.0"
+    "request": "^2.53.0",
+    "request-promise": "^0.4.2"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
