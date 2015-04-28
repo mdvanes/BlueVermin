@@ -1,7 +1,13 @@
-# BlueriqCliUI
+# BlueVermin
 
 > CLI and text-adventure interface for Blueriq.
 
+```
+()-().----.          .
+ \"/` ___  ;________.'
+  ` ^^   ^^
+```
+[logo source](http://www.chris.com/ascii/index.php?art=animals/rodents/mice)
 
 ## Installation
 
@@ -23,7 +29,6 @@ Future versions will be installable through NPM, but will always require a confi
 
 ## TODO
 
-* consider renaming to BlueVermin
 * views for different types of questions: domains, booleans etc.
 * parametrize config.host/port/project etc.
 * handle refresh/page submits (handle event is called with ajax POSTs: e.g.: http://localhost:8080/war/server/session/sessionId/api/subscription/subscriptionId/handleEvent ). For more info see REST API documentation at https://my.blueriq.com/display/BQ93/REST+API > SessionService

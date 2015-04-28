@@ -1,21 +1,21 @@
 {
-  "name": "BlueriqCliUI",
-  "version": "0.0.0",
-  "description": "Blueriq CLI UI",
+  "name": "BlueVermin",
+  "version": "0.1.0",
+  "description": "CLI and text-adventure interface for Blueriq",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mdvanes/BlueriqCliUI.git"
+    "url": "https://github.com/mdvanes/BlueVermin.git"
   },
   "author": "M.D. van Es",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mdvanes/BlueriqCliUI/issues"
+    "url": "https://github.com/mdvanes/BlueVermin/issues"
   },
-  "homepage": "https://github.com/mdvanes/BlueriqCliUI",
+  "homepage": "https://github.com/mdvanes/BlueVermin",
   "dependencies": {
     "chalk": "^1.0.0",
     "express": "^4.11.0",
