@@ -6,11 +6,11 @@
     'use strict';
 
     module.exports = {
-        host: 'lap-2077',
+        host: 'localhost',
         port: '8041',
         project: 'export-Kinderbijslag',
         flow: 'Start',
-        version: '0.0-Trunk', //'0.0-Wetwijziging',
+        version: '0.0-Trunk',
         theme: 'cli'
     };
 
