@@ -6,6 +6,10 @@
 
     var chalk = require('chalk');
 
+    var printModel = function(state) {
+        console.log(state.model);
+    };
+
     // TODO ugly to have rl and state as params?
     var run = function(line, rl, state) {
         line = line.trim();
@@ -20,21 +24,26 @@
             }
         } else {
             switch(line) {
-                case 'look':
-                    state.look();
-                    break;
-                case 'next': // next page
-                    // TODO implement
+                //case 'look':
+                //    state.look();
+                //    break;
+                //case 'next': // next page
+                //    // TODO implement
+                //    break;
+                case 'debug':
+                    // print page json
+                    printModel(state); // TODO conditional
                     break;
                 case 'help':
                     help();
                     break;
                 case 'exit':
-                    console.log(chalk.blue.bold('See you soon at BlueVermin!'));
+                    console.log(chalk.blue.bold('See you soon at BlueVermin!')); // TODO replace with game name?
                     process.exit(0);
                     break;
                 default:
-                    console.error(chalk.red('Unknown command: `' + line.trim() + '`'));
+                    //console.error(chalk.red('Unknown command: `' + line.trim() + '`'));
+                    state.answerQuestion(line.trim());
                     break;
             }
             rl.prompt();

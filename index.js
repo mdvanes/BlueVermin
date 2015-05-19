@@ -14,22 +14,32 @@
         readline = require('readline'),
         rl = readline.createInterface(process.stdin, process.stdout),
         state = null,
-        bsession = null;
+        bsession = null,
+        config = require('./js/config');
 
     var printLogo = function() {
         console.log(chalk.blue.bold('()-().----.          .'));
-        console.log(chalk.blue.bold(' \\"/` ___  ;________.\'  BlueVermin'));
+        console.log(chalk.blue.bold(' \\"/` ___  ;________.\'  Running the BlueVermin game engine'));
         console.log(chalk.blue.bold('  ` ^^   ^^'));
     };
+
+    // TODO test multilang
 
     var init = function() {
         bsession = new Bsession();
         var pageObjPromise = bsession.createHttpSession();
         pageObjPromise.then(function(modelJson) {
             //console.log('deferred promise chain' + response, response);
-            state = new State(modelJson);
+            state = new State(modelJson, bsession);
             //console.log('pageObj/state is defined');
             printLogo();
+
+            // TODO automatically generate ASCII art header/rainbow colors;
+            // TODO use pagedisplayname or config: if pagedisplayname also include WELCOME TO so it can be made multilingual
+            console.log('WELCOME TO %s', config.project.toUpperCase());
+
+            state.printTextItems(); // Current situation of the game is stored in a text-item
+            state.askQuestion(); // Ask the current question, i.e. display question text for the only field on the current page
 
             rl.on('line', function(line) {
                 commands.run(line, rl, state);
@@ -38,7 +48,7 @@
                 console.log(chalk.black.bold.bgRed('\nYou can also shut down with the \'exit\' command'));
                 process.exit(0);
             });
-            rl.setPrompt(chalk.green('blueriq:~$ '));
+            rl.setPrompt(chalk.green('>> '));//'blueriq:~$ ')); // TODO change the prompt text to questiontext of the field?
             rl.prompt();
         }).catch(function(error){
             console.error(chalk.bold.red(error));
