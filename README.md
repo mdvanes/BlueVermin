@@ -9,6 +9,8 @@
 ```
 [logo source](http://www.chris.com/ascii/index.php?art=animals/rodents/mice)
 
+![Screencast of Serious Business](https://raw.githubusercontent.com/mdvanes/BlueVermin/master/img/screencast.gif)
+
 ## Installation
 
 * Install Blueriq 9.4.1 Java
