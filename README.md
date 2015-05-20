@@ -14,8 +14,8 @@
 ## Installation
 
 * Install Blueriq 9.4.1 Java
-* put UI/cli.stg in aquima.home/UI/mvc
-* configure aquima.properties to have a theme cli that points to cli.stg.
+* Put UI/cli.stg in aquima.home/UI/mvc
+* Configure aquima.properties to have a theme cli that points to cli.stg
 * Node must be installed
 * Clone this project and run ```nmp install``` in the dir with the package.json
 
