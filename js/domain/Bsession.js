@@ -1,10 +1,14 @@
 (function() {
     'use strict';
 
-    var request = require('request-promise');
-    var config = require('../config');
+    var request = require('request-promise'),
+        debugz = require('../debugz'),
+        config = require('../config');
 
-    // TODO for debugging require('request-debug')(request);
+    // TODO for debugging
+    debugz.log(function() {
+        require('request-debug')(request);
+    });
 
     // TODO rename BSessionController? Blueriq Session initializer / Blueriq SessionController?
     var Bsession = function(isDebug) {
@@ -103,7 +107,8 @@
     };
 
     Bsession.prototype.submitAnswer = function(answer) {
-        console.log('submitAnswer', answer);
+        debugz.log(function() {console.log('Bsession.submitAnswer', answer, answer.fields[0].values);});
+
 
         // TODO construct url with function
         var url = 'http://' + config.host + ':' + config.port +
@@ -127,18 +132,18 @@
 
         // TODO Bad Request probably still because of the wrong escaping here.
 
-        var testAnswer = {
-            elementKey: 'P866-C0-F2',
-            fields: [
-                {
-                    key: 'P866-C0-F2',
-                    values: [
-                        'bekijk deur'
-                    ]
-                }
-            ]
-        };
-        answer = testAnswer;
+        //var testAnswer = {
+        //    elementKey: 'P866-C0-F2',
+        //    fields: [
+        //        {
+        //            key: 'P866-C0-F2',
+        //            values: [
+        //                'bekijk deur'
+        //            ]
+        //        }
+        //    ]
+        //};
+        //answer = testAnswer;
 
         return request.post({
             url: url,
@@ -150,20 +155,6 @@
                 //'content-length': answer.length
             },
             body: answer //JSON.stringify(answer)
-        }).then(function(response) {
-            // TODO return this as a promise obj
-            if(response && response.statusCode === 404) {
-                throw new Error('submitAnswer Server not found or not started');
-            } else {
-                console.log('RESPONSE submitAnswer response: ', response);
-                response.events.forEach(function(event) {
-                    //console.log(event.changes);
-                    event.changes.changes.forEach(function(change) {
-                        console.log('> change > ', change);
-                    });
-                });
-                //console.log('RESPONSE submitAnswer response.changes: ', response.changes);
-            }
         }).catch(function(e) {
             console.error('submitAnswer err. ' + e);
         });

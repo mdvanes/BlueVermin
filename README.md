@@ -29,6 +29,9 @@ Future versions will be installable through NPM, but will always require a confi
 
 ## TODO
 
+* show error for unknown command
+* clean up State/Bsession/commands
+* improve debugz or find out-of-the box tool for debug instrumentation (toggle debugging with a param, like this: node index.js --debug)
 * views for different types of questions: domains, booleans etc.
 * parametrize config.host/port/project etc.
 * handle refresh/page submits (handle event is called with ajax POSTs: e.g.: http://localhost:8080/war/server/session/sessionId/api/subscription/subscriptionId/handleEvent ). For more info see REST API documentation at https://my.blueriq.com/display/BQ93/REST+API > SessionService
