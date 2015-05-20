@@ -5,8 +5,6 @@
 (function() {
     'use strict';
 
-    var chalk = require('chalk');
-
     var enabled = false;
 
     module.exports = {
@@ -23,5 +21,6 @@
         disable: function() {
             enabled = false;
         }
-    }
+    };
+
 })();
