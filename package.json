@@ -1,5 +1,5 @@
 {
-  "name": "BlueVermin",
+  "name": "bluevermin",
   "version": "0.1.0",
   "description": "CLI and text-adventure interface for Blueriq",
   "main": "index.js",
