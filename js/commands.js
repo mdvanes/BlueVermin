@@ -43,7 +43,16 @@
                     break;
                 default:
                     //console.error(chalk.red('Unknown command: `' + line.trim() + '`'));
-                    state.answerQuestion(line.trim());
+                    var promiseObj = state.answerQuestion(line.trim());
+                    promiseObj.then(function() {
+                        //console.warn(chalk.yellow('answerQuestion is NYI'));
+
+                        state.printTextItems(); // Current situation of the game is stored in a text-item
+                        state.askQuestion(); // Ask the current question, i.e. display question text for the only field on the current page
+
+                        rl.prompt();
+                        //console.log(state.texts);
+                    });
                     break;
             }
             rl.prompt();
