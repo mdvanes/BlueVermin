@@ -24,9 +24,9 @@ Required:
 Installing:
 
 * Run ```npm install bluevermin``` 
-* Put UI/mvc/cli.stg in <BlueriqServer>/aquima.home/UI/mvc
-* Configure aquima.properties to have a theme cli that points to cli.stg
-* Go to node_modules\bluevermin and run ```npm start```
+* Copy node_modules/bluevermin/UI/mvc/cli.stg to <BlueriqServer>/aquima.home/UI/mvc
+* Configure aquima.properties to have a theme "cli" that points to cli.stg
+* Go to node_modules/bluevermin and run ```npm start```
 
 
 ## Usage
@@ -38,6 +38,7 @@ Installing:
 
 ## TODO
 
+* fix order of text items on last page
 * show error if an unknown command is entered
 * clean up State/Bsession/commands
 * improve debugz or find out-of-the box tool for debug instrumentation (toggle debugging with a param, like this: node index.js --debug)
